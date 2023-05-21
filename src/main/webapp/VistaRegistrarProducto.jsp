@@ -13,25 +13,7 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-<style>
 
-
-.container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top:10px;
-	
-	color: black;
-}
-
-.form-container {
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-	background-color: white;
-}
-</style>
 </head>
 <body>
 	<div class="container">
@@ -41,7 +23,7 @@
 			<form method="POST" action="RegistrarProducto">
 				<c:if test="${error eq true}">
     						<div class="alert alert-danger" role="alert">
-        					Has introducido el producto incorrectamente!
+        					Has introducido un dato incorrectamente
     						</div>
 				</c:if>
 				<p>

@@ -21,30 +21,6 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<style>
-.container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 10px;
-	color: black;
-}
-
-.form-container {
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-
-
-.form-container {
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-	background-color: white;
-}
-</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -95,7 +71,7 @@
 							<td>${producto.cantidad}</td>
 							<td>${producto.precio}</td>
 							<td>${producto.caducidad}</td>
-							<td>${producto.idSeccion.nombre}</td>
+							<td>${producto.seccion.nombre}</td>
 
 							<td><a href="VerProducto?id=${producto.id}"
 								class="btn btn-primary ">Ver </a></td>

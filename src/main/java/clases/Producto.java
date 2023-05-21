@@ -9,9 +9,9 @@ public class Producto {
  private int cantidad;
  private double precio;
  private Date caducidad;
- private Seccion idSeccion;
+ private Seccion seccion;
  
-public Producto(int id, String codigo, String nombre, int cantidad, double precio, Date caducidad, Seccion idSeccion) {
+public Producto(int id, String codigo, String nombre, int cantidad, double precio, Date caducidad, Seccion seccion) {
 	super();
 	this.id = id;
 	this.codigo = codigo;
@@ -19,7 +19,7 @@ public Producto(int id, String codigo, String nombre, int cantidad, double preci
 	this.cantidad = cantidad;
 	this.precio = precio;
 	this.caducidad = caducidad;
-	this.idSeccion = idSeccion;
+	this.seccion = seccion;
 }
  
  public Producto () {
@@ -77,18 +77,18 @@ public void setCaducidad(Date caducidad) {
 
 
 
-public Seccion getIdSeccion() {
-	return idSeccion;
+public Seccion getSeccion() {
+	return seccion;
 }
 
-public void setIdSeccion(Seccion idSeccion) {
-	this.idSeccion = idSeccion;
+public void setIdSeccion(Seccion seccion) {
+	this.seccion = seccion;
 }
 
 @Override
 public String toString() {
 	return "Producto [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", cantidad=" + cantidad + ", precio="
-			+ precio + ", caducidad=" + caducidad + ", idSeccion=" + idSeccion + "]";
+			+ precio + ", caducidad=" + caducidad + ", seccion=" + seccion + "]";
 }
  
  

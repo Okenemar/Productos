@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Conector {
 	
 		private static  final String HOST= "localhost";
-		private static final String BBDD= "supermercado";
+		private static final String BBDD= "productos";
 		private static final String USERNAME="root";
 		private static final String PASSWORD="";
 		

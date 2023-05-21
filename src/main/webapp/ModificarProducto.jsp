@@ -11,28 +11,7 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-<style>
-.container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 10px;
-	color: black;
-}
 
-.form-container {
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-.form-container {
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-	background-color: white;
-}
-</style>
 </head>
 <body>
 	<div class="container">
@@ -40,7 +19,7 @@
 			<h1 class="fw-bold">Modificar Producto</h1>
 			<c:if test="${error eq true}">
     						<div class="alert alert-danger" role="alert">
-        					Has introducido la reserva incorrectamente!
+        					Has introducido un dato incorrectamente
     						</div>
 	  		</c:if>
 			<form method="POST" action="ModificarProducto">
@@ -72,7 +51,7 @@
 				</p>
 				<p class="fw-bold">
 					id_Seccion: <input type="text" name="nombreSeccion"
-						value="${producto.idSeccion.nombre}"  required/> <br>
+						value="${producto.seccion.nombre}"  required/> <br>
 				</p>
 				<br> <input type="submit" class="btn btn-secondary"
 					value="Enviar" /> <a href="VerProductos" class="btn btn-dark">Volver</a>

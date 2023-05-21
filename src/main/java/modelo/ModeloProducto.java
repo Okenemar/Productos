@@ -20,7 +20,7 @@ public class ModeloProducto extends Conector {
 		ArrayList<Producto> productos = new ArrayList<Producto>();
 
 		try {
-			prt = con.prepareStatement("SELECT id,codigo,nombre,cantidad,precio,caducidad,id_seccion FROM productos ");
+			prt = con.prepareStatement("SELECT * FROM productos ");
 
 			ResultSet result = prt.executeQuery();
 
@@ -62,7 +62,7 @@ public class ModeloProducto extends Conector {
 
 			prt.setDate(5, new Date(producto.getCaducidad().getTime()));
 
-			prt.setInt(6, producto.getIdSeccion().getId());
+			prt.setInt(6, producto.getSeccion().getId());
 
 			prt.execute();
 
@@ -149,7 +149,7 @@ public class ModeloProducto extends Conector {
 			prt.setInt(3, producto.getCantidad());
 			prt.setDouble(4, producto.getPrecio());
 			prt.setDate(5, new Date (producto.getCaducidad().getTime()));
-			prt.setInt(6, producto.getIdSeccion().getId());
+			prt.setInt(6, producto.getSeccion().getId());
 			prt.setInt(7, producto.getId());
 			prt.executeUpdate();
 		} catch (SQLException e) {
