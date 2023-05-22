@@ -19,15 +19,14 @@
 	<div class="container">
 		<div class="form-container">
 			<h1 class="fw-bold">Registrar Producto</h1>
-			
+
 			<form method="POST" action="RegistrarProducto">
 				<c:if test="${error eq true}">
-    						<div class="alert alert-danger" role="alert">
-        					Has introducido un dato incorrectamente
-    						</div>
+					<div class="alert alert-danger" role="alert">Has introducido
+						un dato incorrectamente</div>
 				</c:if>
 				<p>
-					<b>codigo:</b> <input type="text" name="codigo"  /> <br>
+					<b>codigo:</b> <input type="text" name="codigo" /> <br>
 				</p>
 				<br>
 				<p>
@@ -47,20 +46,17 @@
 				</p>
 				<br>
 				<p>
-					
-					
-					 Secciones:
-					 <select name="seccion">
+
+
+					Secciones: <select name="seccion">
 						<option value="0"></option>
 						<c:forEach items="${secciones}" var="seccion">
 							<option value="${seccion.id}">${seccion.nombre}</option>
 						</c:forEach>
-					</select>
-				
-				<br> <br>
+					</select> <br> <br>
 				</p>
 				<br> <input type="submit" class="btn btn-secondary"
-					value="Guardar" /> <a href="VerProductos" class="btn btn-dark">Volver</a>
+					value="Insertar" /> <a href="VerProductos" class="btn btn-dark">Volver</a>
 			</form>
 
 

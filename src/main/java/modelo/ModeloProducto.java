@@ -106,16 +106,14 @@ public class ModeloProducto extends Conector {
 		Producto producto = new Producto();
 
 		try {
-			prt = con.prepareStatement("SELECT id,codigo,nombre,cantidad,precio,caducidad,id_seccion FROM productos WHERE id=?");
+			prt = con.prepareStatement(
+					"SELECT id,codigo,nombre,cantidad,precio,caducidad,id_seccion FROM productos WHERE id=?");
 
 			prt.setInt(1, id);
 
 			ResultSet result = prt.executeQuery();
-			
-			
-			if (result.next()) {
 
-				
+			if (result.next()) {
 
 				producto.setId(result.getInt(1));
 				producto.setCodigo(result.getString(2));
@@ -124,8 +122,6 @@ public class ModeloProducto extends Conector {
 				producto.setPrecio(result.getDouble(5));
 				producto.setCaducidad(result.getDate(6));
 				producto.setIdSeccion(mSeccion.getSeccion(result.getInt(7)));
-				
-				
 
 			}
 		} catch (SQLException e) {
@@ -133,22 +129,22 @@ public class ModeloProducto extends Conector {
 			e.printStackTrace();
 		}
 		return producto;
-		
+
 	}
 
 	public void modificarProducto(Producto producto) {
-		
+
 		PreparedStatement prt;
-		
+
 		try {
-			prt = con.prepareStatement("UPDATE productos SET codigo=?,nombre=?,cantidad=?,precio=?,caducidad=?,id_seccion=? WHERE id=?");
-			
-			
-			prt.setString(1,producto.getCodigo() );
+			prt = con.prepareStatement(
+					"UPDATE productos SET codigo=?,nombre=?,cantidad=?,precio=?,caducidad=?,id_seccion=? WHERE id=?");
+
+			prt.setString(1, producto.getCodigo());
 			prt.setString(2, producto.getNombre());
 			prt.setInt(3, producto.getCantidad());
 			prt.setDouble(4, producto.getPrecio());
-			prt.setDate(5, new Date (producto.getCaducidad().getTime()));
+			prt.setDate(5, new Date(producto.getCaducidad().getTime()));
 			prt.setInt(6, producto.getSeccion().getId());
 			prt.setInt(7, producto.getId());
 			prt.executeUpdate();
@@ -156,9 +152,20 @@ public class ModeloProducto extends Conector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
+
 	}
+	
+ public void eliminarProducto(int id) {
+	 
+	 PreparedStatement prt;
+	 try {
+		prt = con.prepareStatement("DELETE FROM productos WHERE id=?");
+		prt.setInt(1, id);
+
+		prt.execute();
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+ }
 
 }

@@ -24,114 +24,106 @@ import modelo.ModeloSeccion;
 @WebServlet("/RegistrarProducto")
 public class RegistrarProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegistrarProducto() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ModeloSeccion seccioM = new ModeloSeccion();
-		
-		ArrayList <Seccion>  secciones = new ArrayList <>();
-		
-//		boolean error= false;
-		
-		seccioM.conectar();
-		secciones = seccioM.getSecciones();
-		seccioM.cerrar();
-		
-		request.setAttribute("secciones", secciones);
-//		request.setAttribute("error", error);
-		request.getRequestDispatcher("VistaRegistrarProducto.jsp").forward(request, response);
-		
+	public RegistrarProducto() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ModeloProducto productoM = new ModeloProducto();
-		
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ModeloSeccion modeloSeccion = new ModeloSeccion();
+
+		ArrayList<Seccion> secciones = new ArrayList<>();
+
+
+		modeloSeccion.conectar();
+		secciones = modeloSeccion.getSecciones();
+		modeloSeccion.cerrar();
+
+		request.setAttribute("secciones", secciones);
+		request.getRequestDispatcher("VistaRegistrarProducto.jsp").forward(request, response);
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ModeloProducto modeloProducto = new ModeloProducto();
+
 		String codigo = request.getParameter("codigo");
 		String nombre = request.getParameter("nombre");
-		int cantidad =Integer.parseInt(request.getParameter("cantidad"));
+		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 		double precio = Double.parseDouble(request.getParameter("precio"));
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+		SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
+
 		Date caducidad = new Date();
 		try {
-			caducidad = sdf.parse(request.getParameter("caducidad"));
-			
+			caducidad = fecha.parse(request.getParameter("caducidad"));
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		productoM.conectar();
-		
-		boolean codigoDupli = productoM.CodigoDuplicado(codigo);
-	
-		productoM.cerrar();
-		
-		if (codigoDupli==true || cantidad<0 || precio<0 || caducidad.before(new Date())) {
-			ModeloSeccion seccioM = new ModeloSeccion();
-			
-			ArrayList <Seccion>  secciones = new ArrayList <>();
-			seccioM.conectar();
-			
-			boolean error=true;
-			secciones = seccioM.getSecciones();
-			
-			seccioM.cerrar();
-			
+
+		modeloProducto.conectar();
+
+		boolean codigoDupli = modeloProducto.CodigoDuplicado(codigo);
+
+		modeloProducto.cerrar();
+
+		if (codigoDupli == true || cantidad < 0 || precio < 0 || caducidad.before(new Date())) {
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+
+			ArrayList<Seccion> secciones = new ArrayList<>();
+			modeloSeccion.conectar();
+
+			boolean error = true;
+			secciones = modeloSeccion.getSecciones();
+
+			modeloSeccion.cerrar();
+
 			request.setAttribute("error", error);
 			request.setAttribute("secciones", secciones);
-			
+
 			request.getRequestDispatcher("VistaRegistrarProducto.jsp").forward(request, response);
 		}
-		
-		
-		
-		
-		Producto producto = new Producto();
-		
-		
-		
-		Seccion seccion = new Seccion();
-		
 
-		int id =Integer.parseInt(request.getParameter("seccion"));
-		
+		Producto producto = new Producto();
+
+		Seccion seccion = new Seccion();
+
+		int id = Integer.parseInt(request.getParameter("seccion"));
+
 		seccion.setId(id);
-		
-		
+
 		producto.setCaducidad(caducidad);
 		producto.setCodigo(codigo);
 		producto.setNombre(nombre);
 		producto.setCantidad(cantidad);
 		producto.setPrecio(precio);
 		producto.setIdSeccion(seccion);
-	
-		
-		ModeloProducto productoM2 = new ModeloProducto();
-		
-		productoM2.conectar();
-		
-		productoM2.RegistrarProducto(producto);
-		
-		
+
+		ModeloProducto modeloProducto2 = new ModeloProducto();
+
+		modeloProducto2.conectar();
+
+		modeloProducto2.RegistrarProducto(producto);
+
 		response.sendRedirect("VerProductos");
-		
+
 	}
 
 }

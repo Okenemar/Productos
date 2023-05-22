@@ -18,43 +18,43 @@
 		<div class="form-container">
 			<h1 class="fw-bold">Modificar Producto</h1>
 			<c:if test="${error eq true}">
-    						<div class="alert alert-danger" role="alert">
-        					Has introducido un dato incorrectamente
-    						</div>
-	  		</c:if>
+				<div class="alert alert-danger" role="alert">Has introducido
+					un dato incorrectamente</div>
+			</c:if>
 			<form method="POST" action="ModificarProducto">
 				<p class="fw-bold">
 					Id: ${producto.id } <input type="hidden" name="id"
 						value="${producto.id }" /> <br>
 				</p>
 				<p class="fw-bold">
-					Codigo:  <input type="text" name="codigo"value="${producto.codigo }" /> <br>
+					Codigo: <input type="text" name="codigo"
+						value="${producto.codigo }" /> <br>
 				</p>
 
 				<p class="fw-bold">
-					Nombre: <input type="text" name="nombre" value="${producto.nombre}"  />
+					Nombre: <input type="text" name="nombre" value="${producto.nombre}" />
 					<br>
 				</p>
 				<br>
 				<p class="fw-bold">
 					Cantidad: <input type="text" name="cantidad"
-						value="${producto.cantidad}"  /> <br>
+						value="${producto.cantidad}" /> <br>
 				</p>
 				<br>
 				<p class="fw-bold">
 					Caducidad: <input type="text" name="caducidad"
-						value="${producto.caducidad}"  /> <br>
+						value="${producto.caducidad}" /> <br>
 				</p>
 				<p class="fw-bold">
 					Precio: <input type="text" name="precio"
-						value="${producto.precio }"  required/> <br>
+						value="${producto.precio }" required /> <br>
 				</p>
 				<p class="fw-bold">
-					id_Seccion: <input type="text" name="nombreSeccion"
-						value="${producto.seccion.nombre}"  required/> <br>
+					seccion: <input type="text" name="nombreSeccion"
+						value="${producto.seccion.nombre}" required /> <br>
 				</p>
 				<br> <input type="submit" class="btn btn-secondary"
-					value="Enviar" /> <a href="VerProductos" class="btn btn-dark">Volver</a>
+					value="Modificar" /> <a href="VerProductos" class="btn btn-dark">Volver</a>
 			</form>
 		</div>
 	</div>

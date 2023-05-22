@@ -11,33 +11,36 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-		<div class="container-fluid">
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			
-		</div>
-	</nav>
 	<div class="container">
 		<div class="form-container">
 			<h1 class="fw-bold">GESTION DE PRODUCTOS</h1>
+			<form method="get" action="Buscador">
+				<p class="fw-bold">
+					Buscar producto <input type="text" name="buscador" /><br> <br>
+					<input type="submit" class="btn-primary" value="Buscar">
+				</p>
+				<a href="VerProductos" class="btn btn-dark">Refrescar</a>
+
+
+			</form>
+			
+			<form method="get" action="Precio">
+				<p class="fw-bold">
+					Filtrar precio 
+					<input type="text" name="precioMin" placeholder="minPrecio">
+					<input type="text" name="precioMax" placeholder="maxPrecio">
+					
+					<input type="submit" class="btn-primary" value="Buscar">
+					
+				</p>
+				
+
+
+			</form>
 			<table class="table">
 
 				<thead>
@@ -49,14 +52,14 @@
 						<th scope="col">cantidad</th>
 						<th scope="col">precio</th>
 						<th scope="col">caducidad</th>
-						<th scope="col">id_seccion</th>
-						
+						<th scope="col">seccion</th>
+
 						<th scope="col"></th>
 						<th scope="col"></th>
-						
-							<td><a href="RegistrarProducto" class="btn btn-dark">Registrar
-							</a></td>
-						
+
+						<td><a href="RegistrarProducto" class="btn btn-dark">Insertar
+						</a></td>
+
 
 					</tr>
 				</thead>
@@ -73,16 +76,14 @@
 							<td>${producto.caducidad}</td>
 							<td>${producto.seccion.nombre}</td>
 
-							<td><a href="VerProducto?id=${producto.id}"
-								class="btn btn-primary ">Ver </a></td>
-							
-								<td><a
-									href="ModificarProducto?id=${producto.id}"
-									class="btn btn-secondary ">Modificar </a></td>
-								<td><a
-									href="EliminarProducto?id=${producto.id}"
-									class="btn btn-danger">eliminar </a></td>
-							
+
+
+							<td><a href="ModificarProducto?id=${producto.id}"
+								class="btn btn-secondary ">Modificar </a></td>
+							<td><a href="Eliminar?id=${producto.id}"
+								class="btn btn-danger ">Eliminar </a></td>
+
+
 						</tr>
 
 					</c:forEach>
