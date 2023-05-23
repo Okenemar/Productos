@@ -37,7 +37,8 @@
 					<input type="submit" class="btn-primary" value="Buscar">
 					
 				</p>
-				
+				<a href="OrdenAscendente" class="btn btn-dark">Orden Ascendente</a>
+				<a href="OrdenDescendente" class="btn btn-dark">Orden Descendente</a>
 
 
 			</form>
