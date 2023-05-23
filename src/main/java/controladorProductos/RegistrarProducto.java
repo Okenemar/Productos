@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import clases.Producto;
 import clases.Seccion;
+import clases.Supermercado;
 import modelo.ModeloProducto;
 import modelo.ModeloSeccion;
+import modelo.ModeloSupermercado;
 
 /**
  * Servlet implementation class RegistrarProducto
@@ -41,15 +43,21 @@ public class RegistrarProducto extends HttpServlet {
 			throws ServletException, IOException {
 
 		ModeloSeccion modeloSeccion = new ModeloSeccion();
+		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
 
 		ArrayList<Seccion> secciones = new ArrayList<>();
-
-
+		ArrayList<Supermercado> supermercados = new ArrayList<Supermercado>();
+		
+		modeloSupermercado.conectar();
+		supermercados = modeloSupermercado.getSupermercados();
+		modeloSupermercado.cerrar();
+		
 		modeloSeccion.conectar();
 		secciones = modeloSeccion.getSecciones();
 		modeloSeccion.cerrar();
 
 		request.setAttribute("secciones", secciones);
+		request.setAttribute("supermercados", supermercados);
 		request.getRequestDispatcher("VistaRegistrarProducto.jsp").forward(request, response);
 
 	}
@@ -62,11 +70,17 @@ public class RegistrarProducto extends HttpServlet {
 			throws ServletException, IOException {
 
 		ModeloProducto modeloProducto = new ModeloProducto();
-
+		ModeloSeccion modeloSeccion = new ModeloSeccion();
+		
+		
+		
+		
 		String codigo = request.getParameter("codigo");
 		String nombre = request.getParameter("nombre");
 		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 		double precio = Double.parseDouble(request.getParameter("precio"));
+		String [] supermercados = request.getParameterValues("supermecados");
+		
 		SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
 
 		Date caducidad = new Date();
@@ -85,7 +99,6 @@ public class RegistrarProducto extends HttpServlet {
 		modeloProducto.cerrar();
 
 		if (codigoDupli == true || cantidad < 0 || precio < 0 || caducidad.before(new Date())) {
-			ModeloSeccion modeloSeccion = new ModeloSeccion();
 
 			ArrayList<Seccion> secciones = new ArrayList<>();
 			modeloSeccion.conectar();
@@ -94,9 +107,13 @@ public class RegistrarProducto extends HttpServlet {
 			secciones = modeloSeccion.getSecciones();
 
 			modeloSeccion.cerrar();
-
+			
+			
+			
 			request.setAttribute("error", error);
 			request.setAttribute("secciones", secciones);
+			
+			
 
 			request.getRequestDispatcher("VistaRegistrarProducto.jsp").forward(request, response);
 		}
@@ -104,7 +121,8 @@ public class RegistrarProducto extends HttpServlet {
 		Producto producto = new Producto();
 
 		Seccion seccion = new Seccion();
-
+		
+		
 		int id = Integer.parseInt(request.getParameter("seccion"));
 
 		seccion.setId(id);
@@ -114,14 +132,21 @@ public class RegistrarProducto extends HttpServlet {
 		producto.setNombre(nombre);
 		producto.setCantidad(cantidad);
 		producto.setPrecio(precio);
-		producto.setIdSeccion(seccion);
+		producto.setSeccion(seccion);
 
 		ModeloProducto modeloProducto2 = new ModeloProducto();
 
 		modeloProducto2.conectar();
 
 		modeloProducto2.RegistrarProducto(producto);
-
+		
+		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+		int id_producto = modeloProducto2.getIdProductoPorCodigo(codigo);
+		for (String idsupermercado : supermercados) {
+			modeloSupermercado.insertarProductoSupermercado(id, Integer.parseInt(idsupermercado));
+		}
+		
+		
 		response.sendRedirect("VerProductos");
 
 	}

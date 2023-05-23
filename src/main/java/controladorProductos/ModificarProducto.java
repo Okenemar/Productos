@@ -75,10 +75,7 @@ public class ModificarProducto extends HttpServlet {
 		}
 
 		String nombreSeccion = request.getParameter("nombreSeccion");
-		/*
-		 * int idSeccion = Integer.parseInt("idSeccion");
-		 */
-
+		
 		Producto producto = new Producto();
 
 		producto.setId(id);
@@ -95,13 +92,9 @@ public class ModificarProducto extends HttpServlet {
 		seccion = modeloSeccion.getSeccionId(nombreSeccion);
 		modeloSeccion.cerrar();
 
-		producto.setIdSeccion(seccion);
+		producto.setSeccion(seccion);
 
-		/*
-		 * Seccion seccion = new Seccion(); seccion.setId(idSeccion);
-		 * producto.setIdSeccion(seccion);
-		 */
-
+		
 		ModeloProducto modeloProducto = new ModeloProducto();
 
 		modeloProducto.conectar();

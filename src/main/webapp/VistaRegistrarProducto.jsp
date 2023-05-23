@@ -48,12 +48,20 @@
 				<p>
 
 
-					Secciones: <select name="seccion">
+					<b>Secciones:</b> <select name="seccion">
 						<option value="0"></option>
-						<c:forEach items="${secciones}" var="seccion">
+						<c:forEach items="${secciones}" var="seccion">º
 							<option value="${seccion.id}">${seccion.nombre}</option>
 						</c:forEach>
-					</select> <br> <br>
+					</select> <br> <br> 
+					<label for="supermercado" class="form-label"><b>Supermercados:</b> </label>
+					<br>
+					<c:forEach var="supermercado" items="${supermercados}">
+						<input class="form-check-input" type="checkbox"
+							value="${supermercado.id}" id="${supermercado.id}"
+							name="supermercados">
+						<label class="form-check-label" for="${supermercado.id}">${supermercado.nombre}</label>
+					</c:forEach>
 				</p>
 				<br> <input type="submit" class="btn btn-secondary"
 					value="Insertar" /> <a href="VerProductos" class="btn btn-dark">Volver</a>

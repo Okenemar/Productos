@@ -11,12 +11,12 @@ import clases.Producto;
 import conexion.Conector;
 
 public class ModeloProducto extends Conector {
+	PreparedStatement prt;
 
 	public ArrayList<Producto> getProductos() {
 
-		PreparedStatement prt;
-		ModeloSeccion mSeccion = new ModeloSeccion();
-		mSeccion.setConexion(this.con);
+		ModeloSeccion modeloSeccion = new ModeloSeccion();
+		modeloSeccion.setConexion(this.con);
 		ArrayList<Producto> productos = new ArrayList<Producto>();
 
 		try {
@@ -34,7 +34,7 @@ public class ModeloProducto extends Conector {
 				producto.setPrecio(result.getDouble(5));
 				producto.setCaducidad(result.getDate(6));
 
-				producto.setIdSeccion(mSeccion.getSeccion(result.getInt(7)));
+				producto.setSeccion(modeloSeccion.getSeccion(result.getInt(7)));
 
 				productos.add(producto);
 
@@ -49,7 +49,6 @@ public class ModeloProducto extends Conector {
 
 	public void RegistrarProducto(Producto producto) {
 
-		PreparedStatement prt;
 
 		try {
 			prt = con.prepareStatement(
@@ -74,7 +73,7 @@ public class ModeloProducto extends Conector {
 	}
 
 	public boolean CodigoDuplicado(String codigo) {
-		PreparedStatement prt;
+		
 		boolean codigoDuplicado = false;
 
 		try {
@@ -121,7 +120,7 @@ public class ModeloProducto extends Conector {
 				producto.setCantidad(result.getInt(4));
 				producto.setPrecio(result.getDouble(5));
 				producto.setCaducidad(result.getDate(6));
-				producto.setIdSeccion(mSeccion.getSeccion(result.getInt(7)));
+				producto.setSeccion(mSeccion.getSeccion(result.getInt(7)));
 
 			}
 		} catch (SQLException e) {
@@ -134,7 +133,6 @@ public class ModeloProducto extends Conector {
 
 	public void modificarProducto(Producto producto) {
 
-		PreparedStatement prt;
 
 		try {
 			prt = con.prepareStatement(
@@ -157,7 +155,6 @@ public class ModeloProducto extends Conector {
 	
  public void eliminarProducto(int id) {
 	 
-	 PreparedStatement prt;
 	 try {
 		prt = con.prepareStatement("DELETE FROM productos WHERE id=?");
 		prt.setInt(1, id);
@@ -167,5 +164,23 @@ public class ModeloProducto extends Conector {
 		// TODO: handle exception
 	}
  }
+ public int getIdProductoPorCodigo(String codigo) {
+		
+		 int idProducto = -1;
+		    
+		    try {
+		        PreparedStatement pSt = con.prepareStatement("SELECT id FROM productos WHERE codigo = ?;");
+		        pSt.setString(1, codigo);
+		        ResultSet resultado = pSt.executeQuery();
+		        if (resultado.next()) {
+		        	idProducto =  resultado.getInt("id");
+		        }
+		        pSt.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		  
+		return idProducto;
+	}
 
 }
