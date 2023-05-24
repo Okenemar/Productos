@@ -7,6 +7,7 @@ public class Supermercado {
 	
 	
 	public Supermercado(int id, String nombre) {
+		super();
 		this.id = id;
 		this.nombre = nombre;
 		
@@ -32,10 +33,6 @@ public class Supermercado {
 		this.nombre = nombre;
 	}
 	
-	
-
-	
-
 	@Override
 	public String toString() {
 		return "Supermercado [id=" + id + ", nombre=" + nombre + "]";

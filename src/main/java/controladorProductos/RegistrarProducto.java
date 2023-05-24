@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -26,129 +27,137 @@ import modelo.ModeloSupermercado;
 @WebServlet("/RegistrarProducto")
 public class RegistrarProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public RegistrarProducto() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public RegistrarProducto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		ModeloSeccion modeloSeccion = new ModeloSeccion();
-		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
-
-		ArrayList<Seccion> secciones = new ArrayList<>();
-		ArrayList<Supermercado> supermercados = new ArrayList<Supermercado>();
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		modeloSupermercado.conectar();
-		supermercados = modeloSupermercado.getSupermercados();
-		modeloSupermercado.cerrar();
+		ModeloSeccion modeloSeccion = new ModeloSeccion();
+		
+		ArrayList <Seccion>  secciones = new ArrayList <>();
+		
 		
 		modeloSeccion.conectar();
 		secciones = modeloSeccion.getSecciones();
 		modeloSeccion.cerrar();
-
+		
+		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+		
+		modeloSupermercado.conectar();
+		
+		ArrayList <Supermercado> supermercados = modeloSupermercado.getSupermercados();
+		
+		modeloSupermercado.cerrar();
+		
 		request.setAttribute("secciones", secciones);
 		request.setAttribute("supermercados", supermercados);
 		request.getRequestDispatcher("VistaRegistrarProducto.jsp").forward(request, response);
-
+		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		ModeloProducto modeloProducto = new ModeloProducto();
-		ModeloSeccion modeloSeccion = new ModeloSeccion();
-		
-		
 		
 		
 		String codigo = request.getParameter("codigo");
 		String nombre = request.getParameter("nombre");
-		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+		int cantidad =Integer.parseInt(request.getParameter("cantidad"));
 		double precio = Double.parseDouble(request.getParameter("precio"));
-		String [] supermercados = request.getParameterValues("supermecados");
-		
 		SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
-
+		
+		String[] supermercados = request.getParameterValues("supermercados"); 
+		
+		int[] idsSupermercados = Arrays.stream(supermercados).mapToInt(Integer::parseInt).toArray();
+		
 		Date caducidad = new Date();
 		try {
 			caducidad = fecha.parse(request.getParameter("caducidad"));
-
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		modeloProducto.conectar();
-
+		
 		boolean codigoDupli = modeloProducto.CodigoDuplicado(codigo);
-
+	
 		modeloProducto.cerrar();
-
-		if (codigoDupli == true || cantidad < 0 || precio < 0 || caducidad.before(new Date())) {
-
-			ArrayList<Seccion> secciones = new ArrayList<>();
+		
+		if (codigoDupli==true || cantidad<0 || precio<0 || caducidad.before(new Date())) {
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			
+			ArrayList <Seccion>  secciones = new ArrayList <>();
 			modeloSeccion.conectar();
-
-			boolean error = true;
+			
+			boolean error=true;
 			secciones = modeloSeccion.getSecciones();
-
+			
 			modeloSeccion.cerrar();
-			
-			
 			
 			request.setAttribute("error", error);
 			request.setAttribute("secciones", secciones);
 			
-			
-
 			request.getRequestDispatcher("VistaRegistrarProducto.jsp").forward(request, response);
 		}
-
+		
+		
+		
+		
 		Producto producto = new Producto();
-
+		
+		
+		
 		Seccion seccion = new Seccion();
 		
+
+		int id =Integer.parseInt(request.getParameter("seccion"));
 		
-		int id = Integer.parseInt(request.getParameter("seccion"));
-
 		seccion.setId(id);
-
+		
+		
 		producto.setCaducidad(caducidad);
 		producto.setCodigo(codigo);
 		producto.setNombre(nombre);
 		producto.setCantidad(cantidad);
 		producto.setPrecio(precio);
 		producto.setSeccion(seccion);
-
-		ModeloProducto modeloProducto2 = new ModeloProducto();
-
-		modeloProducto2.conectar();
-
-		modeloProducto2.RegistrarProducto(producto);
+		
+		modeloProducto.conectar();
+		
+		modeloProducto.RegistrarProducto(producto);
+		
+		 int  idProducto= modeloProducto.getIdProductoPorCodigo(codigo);
+		
+		 modeloProducto.cerrar();
+		
+		
 		
 		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
-		int id_producto = modeloProducto2.getIdProductoPorCodigo(codigo);
-		for (String idsupermercado : supermercados) {
-			modeloSupermercado.insertarProductoSupermercado(id, Integer.parseInt(idsupermercado));
+		modeloSupermercado.conectar();
+		for (int i = 0; i < idsSupermercados.length; i++) {
+			
+			modeloSupermercado.registrarSuperProducto(idProducto, idsSupermercados[i]);
 		}
 		
 		
+		
+		
 		response.sendRedirect("VerProductos");
-
+		
 	}
 
 }

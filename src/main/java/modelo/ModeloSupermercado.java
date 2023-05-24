@@ -9,67 +9,57 @@ import clases.Supermercado;
 import conexion.Conector;
 
 public class ModeloSupermercado extends Conector {
-	PreparedStatement prt;
 
 	public ArrayList<Supermercado> getSupermercados() {
-		ArrayList<Supermercado> supermercados = new ArrayList<Supermercado>();
-
+		PreparedStatement prt;
+		
+		ArrayList <Supermercado> supermercados = new ArrayList<>();
 		try {
-			prt = con.prepareStatement("SELECT * FROM supermercados");
+			prt = con.prepareStatement("SELECT id, nombre FROM supermercados");
+			
 			ResultSet result = prt.executeQuery();
-
-			while (result.next()) {
+			
+			while(result.next()) {
 				Supermercado supermercado = new Supermercado();
-
-				supermercado.setId(result.getInt("id"));
-				supermercado.setNombre(result.getString("nombre"));
-
+				
+				supermercado.setId(result.getInt(1));
+				supermercado.setNombre(result.getString(2));
+				
 				supermercados.add(supermercado);
-
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		
 		return supermercados;
 	}
 
-	public Supermercado getSupermercado(int id) {
-		Supermercado supermercado = new Supermercado();
 
+	
+
+	public void registrarSuperProducto(int idProducto, int idSupermercado) {
+		
+		PreparedStatement prt;
+		
 		try {
-			prt = con.prepareStatement("SELECT * FROM supermercados WHERE id=?");
-			prt.setInt(1, id);
-			ResultSet result = prt.executeQuery();
-
-			result.next();
-
-			supermercado.setId(result.getInt("id"));
-			supermercado.setNombre(result.getString("nombre"));
-
-			return supermercado;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return supermercado;
-	}
-
-	public void insertarProductoSupermercado(int id_producto, int idSupermercado) {
-
-		try {
-			prt = con.prepareStatement("INSERT INTO productos_supermercados (id_producto,id_supermercado) VALUES(?,?)");
-
-			prt.setInt(1, id_producto);
+			prt = con.prepareStatement("INSERT INTO productos_supermercados(id_producto, id_supermercado) VALUES (?,?)");
+		
+			prt.setInt(1, idProducto);
 			prt.setInt(2, idSupermercado);
-
+			
 			prt.execute();
-
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
 		}
+		
+		
+		
 	}
+	
+	
 }
