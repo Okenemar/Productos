@@ -42,6 +42,16 @@
 
 
 			</form>
+			
+			<form method="get" action="EliminarProductosPorTexto">
+				<p>
+					Codigo de productos a eliminar: <input type="text" name="codigoProducto"/>
+					<input type="submit" class="btn btn-danger"  value="EliminarProductos">
+					
+				</p>
+			</form>
+			<form method="get" action="EliminarCheckBox">
+			<input type="submit" class="btn btn-danger" value="Eliminar Productos Seleccionados" >
 			<table class="table">
 
 				<thead>
@@ -69,6 +79,9 @@
 					<c:forEach items="${productos}" var="producto">
 						<tr>
 							<th scope="row"></th>
+							<td><input class="form-check-input" type="checkbox"
+							id="flexCheckDefault" value="${producto.id}"
+							name="productos"></td>
 							<td>${producto.id}</td>
 							<td>${producto.codigo}</td>
 							<td>${producto.nombre}</td>
@@ -93,6 +106,8 @@
 
 				</tbody>
 			</table>
+			
+			</form>
 		</div>
 	</div>
 

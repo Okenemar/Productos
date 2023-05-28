@@ -164,6 +164,17 @@ public class ModeloProducto extends Conector {
 		// TODO: handle exception
 	}
  }
+ 
+ public void eliminarProductoPorCodigo(String codigo) {
+	 try {
+		prt = con.prepareStatement("DELETE FROM productos WHERE codigo=?");
+		prt.setString(1, codigo);
+		
+		prt.execute();
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+ }
  public int getIdProductoPorCodigo(String codigo) {
 		
 		 int idProducto = -1;
@@ -182,5 +193,26 @@ public class ModeloProducto extends Conector {
 		  
 		return idProducto;
 	}
+ 
+ public boolean productoExiste(String codigo) {
+	 
+	 boolean productoExiste = false;
+	 try {
+		prt = con.prepareStatement("SELECT id FROM productos WHERE codigo=?");
+		prt.setString(1,codigo);
+		ResultSet resultado = prt.executeQuery();
+		if(resultado.next()) {
+			productoExiste = true;
+		}
+		else {
+			productoExiste = false;
+			
+		}
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	 
+	 return productoExiste;
+ }
 
 }
