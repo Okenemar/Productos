@@ -56,7 +56,8 @@
 
 				<thead>
 					<tr>
-						<th scope="col">#</th>
+						<th scope="col"></th>
+						<th scope="col"></th>
 						<th scope="col">id</th>
 						<th scope="col">codigo</th>
 						<th scope="col">nombre</th>
@@ -82,6 +83,7 @@
 							<td><input class="form-check-input" type="checkbox"
 							id="flexCheckDefault" value="${producto.id}"
 							name="productos"></td>
+							
 							<td>${producto.id}</td>
 							<td>${producto.codigo}</td>
 							<td>${producto.nombre}</td>
