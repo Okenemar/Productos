@@ -114,13 +114,13 @@ public class ModeloProducto extends Conector {
 
 			if (result.next()) {
 
-				producto.setId(result.getInt(1));
-				producto.setCodigo(result.getString(2));
-				producto.setNombre(result.getString(3));
-				producto.setCantidad(result.getInt(4));
-				producto.setPrecio(result.getDouble(5));
-				producto.setCaducidad(result.getDate(6));
-				producto.setSeccion(mSeccion.getSeccion(result.getInt(7)));
+				producto.setId(result.getInt("id"));
+				producto.setCodigo(result.getString("codigo"));
+				producto.setNombre(result.getString("nombre"));
+				producto.setCantidad(result.getInt("cantidad"));
+				producto.setPrecio(result.getDouble("precio"));
+				producto.setCaducidad(result.getDate("caducidad"));
+				producto.setSeccion(mSeccion.getSeccion(result.getInt("id_seccion")));
 
 			}
 		} catch (SQLException e) {

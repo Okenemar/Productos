@@ -70,17 +70,18 @@ public class ModeloSeccion extends Conector {
 		Seccion seccion = new Seccion();
 
 		try {
-			prt = con.prepareStatement("SELECT id,nombre FROM `secciones` WHERE nombre=?");
+			prt = con.prepareStatement("SELECT id,nombre FROM secciones WHERE nombre=?");
 
 			prt.setString(1, nombreSeccion);
 
-			ResultSet result = prt.executeQuery();
+			ResultSet resultado = prt.executeQuery();
 
-			while (result.next()) {
-				seccion.setId(result.getInt(1));
-				seccion.setNombre(result.getString(2));
+			resultado.next();
+			seccion.setId(resultado.getInt("id"));
+			seccion.setNombre(resultado.getString("nombre"));
 
-			}
+			return seccion;
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

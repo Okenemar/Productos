@@ -37,10 +37,15 @@
 					<input type="submit" class="btn-primary" value="Buscar">
 					
 				</p>
+				</form>
 				<a href="OrdenAscendente" class="btn btn-dark">Orden Ascendente</a>
 				<a href="OrdenDescendente" class="btn btn-dark">Orden Descendente</a>
-
-
+				
+			<form method="get" action="EliminarProductos">
+				<p class="fw-bold">Eliminar Varios Productos</p>
+				
+				<input type="text" name="eliminarVarios" placeholder="Selecciona varios productos para eliminar">
+				<input type="submit" class="btn-danger" value="Eliminar">
 			</form>
 			
 			<form method="get" action="EliminarProductosPorTexto">
