@@ -49,10 +49,18 @@
 					Precio: <input type="text" name="precio"
 						value="${producto.precio }" required /> <br>
 				</p>
-				<p class="fw-bold">
-					seccion: <input type="text" name="nombreSeccion"
-						value="${producto.seccion.nombre}" required /> <br>
-				</p>
+				<b>Secciones:</b> <select name="seccion">
+						<option value="${seccion.id}">${seccion.nombre}</option>
+						<c:forEach items="${secciones}" var="seccion">
+							<c:if test="${seccion.id == producto.seccion.id}">
+								<option value="${seccion.nombre}" selected>${seccion.nombre}</option>
+							</c:if>	
+							<c:if test="${seccion.id != producto.seccion.id}">
+								<option value="${seccion.nombre}">${seccion.nombre}</option>
+							</c:if>	
+						</c:forEach>
+						
+					</select> <br> <br>
 				<br> <input type="submit" class="btn btn-secondary"
 					value="Modificar" /> <a href="VerProductos" class="btn btn-dark">Volver</a>
 			</form>

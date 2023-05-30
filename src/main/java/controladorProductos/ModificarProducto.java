@@ -3,6 +3,7 @@ package controladorProductos;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -38,7 +39,17 @@ public class ModificarProducto extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		ModeloSeccion modeloSeccion = new ModeloSeccion();
+
+		ArrayList<Seccion> secciones = new ArrayList<>();
 		int id = Integer.parseInt(request.getParameter("id"));
+		
+		modeloSeccion.conectar();
+		secciones = modeloSeccion.getSecciones();
+	
+		modeloSeccion.cerrar();
+		
+		
 		Producto producto = new Producto();
 
 		ModeloProducto modeloProducto = new ModeloProducto();
@@ -47,9 +58,11 @@ public class ModificarProducto extends HttpServlet {
 
 		producto = modeloProducto.getProducto(id);
 
+		
 		modeloProducto.cerrar();
 
 		request.setAttribute("producto", producto);
+		request.setAttribute("secciones", secciones);
 		request.getRequestDispatcher("ModificarProducto.jsp").forward(request, response);
 	}
 
@@ -59,6 +72,7 @@ public class ModificarProducto extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		int id = Integer.parseInt(request.getParameter("id"));
 		String codigo = request.getParameter("codigo");
 		String nombre = request.getParameter("nombre");
@@ -74,8 +88,8 @@ public class ModificarProducto extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		String nombreSeccion = request.getParameter("nombreSeccion");
-		
+		String nombreSeccion = request.getParameter("seccion");
+
 		Producto producto = new Producto();
 
 		producto.setId(id);
@@ -84,17 +98,15 @@ public class ModificarProducto extends HttpServlet {
 		producto.setCantidad(cantidad);
 		producto.setPrecio(precio);
 		producto.setCaducidad(caducidad);
-
+		
 		Seccion seccion = new Seccion();
 		ModeloSeccion modeloSeccion = new ModeloSeccion();
 
 		modeloSeccion.conectar();
 		seccion = modeloSeccion.getSeccionId(nombreSeccion);
 		modeloSeccion.cerrar();
-
 		producto.setSeccion(seccion);
 
-		
 		ModeloProducto modeloProducto = new ModeloProducto();
 
 		modeloProducto.conectar();
@@ -102,7 +114,7 @@ public class ModificarProducto extends HttpServlet {
 		modeloProducto.modificarProducto(producto);
 
 		modeloProducto.cerrar();
-
+		
 		response.sendRedirect("VerProductos");
 
 	}

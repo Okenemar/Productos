@@ -10,8 +10,9 @@ import conexion.Conector;
 
 public class ModeloSupermercado extends Conector {
 
+	PreparedStatement prt;
+
 	public ArrayList<Supermercado> getSupermercados() {
-		PreparedStatement prt;
 		
 		ArrayList <Supermercado> supermercados = new ArrayList<>();
 		try {
@@ -42,7 +43,6 @@ public class ModeloSupermercado extends Conector {
 
 	public void registrarSuperProducto(int idProducto, int idSupermercado) {
 		
-		PreparedStatement prt;
 		
 		try {
 			prt = con.prepareStatement("INSERT INTO productos_supermercados(id_producto, id_supermercado) VALUES (?,?)");
@@ -60,6 +60,40 @@ public class ModeloSupermercado extends Conector {
 		
 		
 	}
+	
+	public boolean productoSuperExiste(int idProducto) {
+		boolean existe = false;
+		try {
+			prt = con.prepareStatement("SELECT id_supermercado FROM productos_supermercados WHERE id_producto=?");
+			
+			prt.setInt(1, idProducto);
+			
+			ResultSet resultado = prt.executeQuery();
+			
+			if (resultado.next()) {
+				existe = true;
+				
+			}else {
+				existe = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return existe;
+	}
+	
+	 public void eliminarProductoSuper(int idProducto) {
+		 
+		 try {
+			prt = con.prepareStatement("DELETE FROM productos_supermercados WHERE id_producto=?");
+			prt.setInt(1, idProducto);
+
+			prt.execute();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	 }
 	
 	
 }
