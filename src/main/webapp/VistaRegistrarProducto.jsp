@@ -55,7 +55,9 @@
 						</c:forEach>
 					</select> <br> <br> 
 					<label for="supermercado" class="form-label"><b>Supermercados:</b> </label>
+					
 					<br>
+					
 					<c:forEach var="supermercado" items="${supermercados}">
 						<input class="form-check-input" type="checkbox"
 							value="${supermercado.id}" id="${supermercado.id}"

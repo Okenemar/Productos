@@ -50,7 +50,7 @@
 						value="${producto.precio }" required /> <br>
 				</p>
 				<b>Secciones:</b> <select name="seccion">
-						<option value="${seccion.id}">${seccion.nombre}</option>
+						
 						<c:forEach items="${secciones}" var="seccion">
 							<c:if test="${seccion.id == producto.seccion.id}">
 								<option value="${seccion.nombre}" selected>${seccion.nombre}</option>
